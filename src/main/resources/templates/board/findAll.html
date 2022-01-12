@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>findAll.html</h2>
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일자</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board: ${boardList}">
+        <td th:text="${board.boardId}"></td>
+        <td>
+            <a th:href="@{|/board/${board.boardId}|}">
+                <span th:text="${board.boardTitle}"></span>
+            </a>
+        </td>
+        <td th:text="${board.boardWriter}"></td>
+        <td th:text="${board.boardDate}"></td>
+        <!-- 제목 클릭하면 상세조회화면(findById.html) 출력           -->
+        <!-- ajax를 이용한 상세조회를 해보자. 조회 버튼을 클릭하면 목록 아래에 해당 글의 상세 내용이 출력되도록. -->
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
