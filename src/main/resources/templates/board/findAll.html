@@ -3,6 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        function detail(boardId) {
+            console.log(boardId);
+            const reqUrl = "/board/" + boardId;
+            $.ajax({
+                type: 'post',
+                url: reqUrl,
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    let output = "";
+                    output += "<table>\n" +
+                        "    <thead>\n" +
+                        "        <tr>\n" +
+                        "            <th>번호</th>\n" +
+                        "            <th>작성자</th>\n" +
+                        "            <th>비밀번호</th>\n" +
+                        "            <th>제목</th>\n" +
+                        "            <th>내용</th>\n" +
+                        "        </tr>\n" +
+                        "    </thead>\n" +
+                        "    <tbody>\n" +
+                        "        <tr>\n" +
+                        "            <td>" + result.boardId + "</td>\n" +
+                        "            <td>" + result.boardWriter + "</td>\n" +
+                        "            <td>" + result.boardPassword + "</td>\n" +
+                        "            <td>" + result.boardTitle + "</td>\n" +
+                        "            <td>" + result.boardContents + "</td>\n" +
+                        "        </tr>\n" +
+                        "    </tbody>\n" +
+                        "</table>";
+                    document.getElementById("detail-view").innerHTML = output;
+                },
+                error: function () {
+                    alert('ajax 실패');
+                }
+            });
+        }
+
+    </script>
 </head>
 <body>
 <h2>findAll.html</h2>
@@ -13,6 +54,7 @@
         <th>제목</th>
         <th>작성자</th>
         <th>작성일자</th>
+        <th>상세조회(ajax)</th>
     </tr>
     </thead>
     <tbody>
@@ -25,11 +67,13 @@
         </td>
         <td th:text="${board.boardWriter}"></td>
         <td th:text="${board.boardDate}"></td>
+        <td><button th:onclick="detail([[${board.boardId}]])">상세조회(ajax)</button></td>
         <!-- 제목 클릭하면 상세조회화면(findById.html) 출력           -->
         <!-- ajax를 이용한 상세조회를 해보자. 조회 버튼을 클릭하면 목록 아래에 해당 글의 상세 내용이 출력되도록. -->
 
     </tr>
     </tbody>
 </table>
+<div id="detail-view"></div>
 </body>
 </html>
