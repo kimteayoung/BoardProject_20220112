@@ -1,8 +1,10 @@
 package com.icia.board.entity;
 
 import com.icia.board.dto.BoardSaveDTO;
+import com.icia.board.dto.BoardUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,8 +12,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "board_table")
-public class BoardEntity {
+public class BoardEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
@@ -29,16 +32,27 @@ public class BoardEntity {
     @Column
     private String boardContents;
 
-    @Column
-    private LocalDateTime boardDate;
+//    @Column(updatable = false)
+//    private LocalDateTime boardDate;
 
-    public static BoardEntity toSaveBoard(BoardSaveDTO boardSaveDTO){
+    public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO){
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setBoardWriter(boardSaveDTO.getBoardWriter());
         boardEntity.setBoardPassword(boardSaveDTO.getBoardPassword());
         boardEntity.setBoardTitle(boardSaveDTO.getBoardTitle());
         boardEntity.setBoardContents(boardSaveDTO.getBoardContents());
-        boardEntity.setBoardDate(LocalDateTime.now());
+//        boardEntity.setBoardDate(LocalDateTime.now());
+        return boardEntity;
+    }
+
+    public static BoardEntity toUpdateEntity(BoardUpdateDTO boardUpdateDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setId(boardUpdateDTO.getBoardId());
+        boardEntity.setBoardWriter(boardUpdateDTO.getBoardWriter());
+        boardEntity.setBoardPassword(boardUpdateDTO.getBoardPassword());
+        boardEntity.setBoardTitle(boardUpdateDTO.getBoardTitle());
+        boardEntity.setBoardContents(boardUpdateDTO.getBoardContents());
+//        boardEntity.setBoardDate(LocalDateTime.now());
         return boardEntity;
     }
 

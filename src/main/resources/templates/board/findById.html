@@ -6,6 +6,11 @@
 </head>
 <body>
 <h2>findById.html</h2>
+<!-- 수정기능 만들기. 수정화면(update.html)에서 비밀번호를 입력받고 일치하면 수정처리
+        일치하지 않으면 수정처리를 하지 않음.
+        수정처리도 post방식(폼에서 바로 요청하는)
+                put방식(ajax를 이용하여 요청하는) 구자기로 모두 해보자.
+        수정이 완료되면 수정 후 상세페이지를 출력-->
 <table>
     <thead>
     <tr>
@@ -14,6 +19,7 @@
         <th>비밀번호</th>
         <th>제목</th>
         <th>내용</th>
+        <th>작성일자</th>
     </tr>
     </thead>
     <tbody>
@@ -23,10 +29,11 @@
         <td th:text="${board.boardPassword}"></td>
         <td th:text="${board.boardTitle}"></td>
         <td th:text="${board.boardContents}"></td>
-
+        <td th:text="${board.boardDate}"></td>
     </tr>
     </tbody>
 </table>
+<a th:href="@{|/board/update/${board.boardId}|}">수정</a>
 
 </body>
 </html>

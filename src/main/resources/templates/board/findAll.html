@@ -5,7 +5,7 @@
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script>
-        function detail(boardId) {
+        const detail = (boardId) => {
             console.log(boardId);
             const reqUrl = "/board/" + boardId;
             $.ajax({
@@ -19,30 +19,29 @@
                         "    <thead>\n" +
                         "        <tr>\n" +
                         "            <th>번호</th>\n" +
-                        "            <th>작성자</th>\n" +
-                        "            <th>비밀번호</th>\n" +
                         "            <th>제목</th>\n" +
+                        "            <th>작성자</th>\n" +
                         "            <th>내용</th>\n" +
+                        "            <th>작성일자</th>\n" +
                         "        </tr>\n" +
                         "    </thead>\n" +
                         "    <tbody>\n" +
                         "        <tr>\n" +
                         "            <td>" + result.boardId + "</td>\n" +
-                        "            <td>" + result.boardWriter + "</td>\n" +
-                        "            <td>" + result.boardPassword + "</td>\n" +
                         "            <td>" + result.boardTitle + "</td>\n" +
+                        "            <td>" + result.boardWriter + "</td>\n" +
                         "            <td>" + result.boardContents + "</td>\n" +
+                        "            <td>" + result.boardDate + "</td>\n" +
                         "        </tr>\n" +
                         "    </tbody>\n" +
                         "</table>";
-                    document.getElementById("detail-view").innerHTML = output;
+                    document.getElementById("board-detail").innerHTML = output;
                 },
                 error: function () {
                     alert('ajax 실패');
                 }
             });
         }
-
     </script>
 </head>
 <body>
@@ -74,6 +73,6 @@
     </tr>
     </tbody>
 </table>
-<div id="detail-view"></div>
+<div id="board-detail"></div>
 </body>
 </html>
