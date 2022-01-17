@@ -8,6 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,6 +33,10 @@ public class BoardEntity extends BaseEntity {
 
     @Column
     private String boardContents;
+
+    // 댓글 연관관계
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
 
 //    @Column(updatable = false)
 //    private LocalDateTime boardDate;

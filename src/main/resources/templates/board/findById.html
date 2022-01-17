@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 </head>
 <body>
+
 <h2>findById.html</h2>
+
+
 <!-- 수정기능 만들기. 수정화면(update.html)에서 비밀번호를 입력받고 일치하면 수정처리
         일치하지 않으면 수정처리를 하지 않음.
         수정처리도 post방식(폼에서 바로 요청하는)
@@ -34,6 +39,53 @@
     </tbody>
 </table>
 <a th:href="@{|/board/update/${board.boardId}|}">수정</a>
+<button>삭제</button>
+
+<div id="comment-write"></div>
+    <input type="text" id="commentWriter" placeholder="작성자">
+    <input type="text" id="commentContents" placeholder="내용">
+    <button id="comment-write-btn">댓글등록</button>
+
+<div id="comment-area">
+    <table>
+        <thead>
+            <tr>
+                <th>댓글번호</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>작성시간</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+</div>
 
 </body>
+<script>
+    $("#comment-write-btn").click(function (){
+        console.log('댓글등록 버튼 클릭');
+        const commentWriter = $("#commentWriter").val();
+        const commentContents = $("#commentContents").val();
+        const boardId = '[[${board.boardId}]]';
+        $.ajax({
+            type: 'post',
+            url: '/comment/save',
+            data: {
+                'commentWriter': commentWriter,
+                'commentContents': commentContents,
+                'boardId': boardId
+            },
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+            },
+            error: function () {
+                alert('ajax 실패');
+            }
+        });
+    });
+</script>
 </html>
