@@ -34,6 +34,11 @@ public class BoardEntity extends BaseEntity {
     @Column
     private String boardContents;
 
+    // 회원 엔티티와의 연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
     // 댓글 연관관계
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
@@ -41,12 +46,14 @@ public class BoardEntity extends BaseEntity {
 //    @Column(updatable = false)
 //    private LocalDateTime boardDate;
 
-    public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO){
+    public static BoardEntity toSaveEntity(BoardSaveDTO boardSaveDTO, MemberEntity memberEntity){
         BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setBoardWriter(boardSaveDTO.getBoardWriter());
+//        boardEntity.setBoardWriter(boardSaveDTO.getBoardWriter());
+        boardEntity.setBoardWriter(memberEntity.getMemberEmail());
         boardEntity.setBoardPassword(boardSaveDTO.getBoardPassword());
         boardEntity.setBoardTitle(boardSaveDTO.getBoardTitle());
         boardEntity.setBoardContents(boardSaveDTO.getBoardContents());
+        boardEntity.setMemberEntity(memberEntity);
 //        boardEntity.setBoardDate(LocalDateTime.now());
         return boardEntity;
     }
