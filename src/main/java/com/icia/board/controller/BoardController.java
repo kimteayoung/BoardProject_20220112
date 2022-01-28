@@ -20,18 +20,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/board/*")
 @RequiredArgsConstructor
 @Slf4j
 public class BoardController {
     private final BoardService bs;
 
-    @GetMapping("/save")
+    @GetMapping("save")
     public String saveForm() {
         return "board/save";
     }
 
-    @PostMapping("/save")
+    @PostMapping("save")
     public String save(@ModelAttribute BoardSaveDTO boardSaveDTO){
         Long boardId = bs.save(boardSaveDTO);
         return "redirect:/board/";
@@ -45,7 +45,7 @@ public class BoardController {
         return "board/findAll";
     }
 
-    @GetMapping("/{boardId}")
+    @GetMapping("{boardId}")
     public String findById(Model model, @PathVariable Long boardId) {
         log.info("글보기 메서드 호출. 요청글 번호: {}", boardId);
         BoardDetailDTO board = bs.findById(boardId);
@@ -53,20 +53,20 @@ public class BoardController {
         return "board/findById";
     }
 
-    @PostMapping("/{boardId}")
+    @PostMapping("{boardId}")
     public ResponseEntity findById2(@PathVariable Long boardId) {
         BoardDetailDTO board = bs.findById(boardId);
         return new ResponseEntity<BoardDetailDTO>(board, HttpStatus.OK);
     }
 
-    @GetMapping("/update/{boardId}")
+    @GetMapping("update/{boardId}")
     public String updateForm(@PathVariable Long boardId, Model model) {
         BoardDetailDTO board = bs.findById(boardId);
         model.addAttribute("board", board);
         return "board/update";
     }
 
-    @PostMapping("/update")
+    @PostMapping("update")
     public String update(@ModelAttribute BoardUpdateDTO boardUpdateDTO) {
         bs.update(boardUpdateDTO);
         return "redirect:/board/" + boardUpdateDTO.getBoardId();
@@ -80,7 +80,7 @@ public class BoardController {
 
     // 페이징 처리(/board?page=5)
     // 5번글(/board/5)
-    @GetMapping
+    @GetMapping("/board")
     public String paging(@PageableDefault(page = 1)Pageable pageable, Model model) {
         Page<BoardPagingDTO> boardList = bs.paging(pageable);
         model.addAttribute("boardList", boardList);

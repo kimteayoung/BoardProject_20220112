@@ -34,6 +34,10 @@ public class BoardEntity extends BaseEntity {
     @Column
     private String boardContents;
 
+    @Column
+    private LocalDateTime boardDate;
+
+
     // 회원 엔티티와의 연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "membet_table")
+@Table(name = "member_table")
 public class MemberEntity extends  BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
